@@ -9,6 +9,51 @@ description: Lists the changes per LoRa Server release, including steps how to u
 ---
 # Changelog
 
+## v3.0.0
+
+### Features
+
+#### Gateway messages
+
+The message structure for gateway data has been updated to make it more flexible
+to use with different types of packet-forwarders. This change was needed to add
+support for the [Basic Station LNS protocol](https://doc.sm.tc/station/tcproto.html).
+
+The downlink frame contains a `timing` field which can be either
+`IMMEDIATELY`, `DELAY` or `GPS_EPOCH`. Based on the `timing` value, an
+additional object must be given with the additional timing information.
+Refer to [Commands](https://www.loraserver.io/lora-gateway-bridge/payloads/commands/)
+for more details.
+
+#### Azure integration
+
+Using the Azure integration, it is possible to connect gateways using the
+[Azure IoT Hub](https://azure.microsoft.com/en-us/services/iot-hub/) service.
+
+### Improvements
+
+#### Legacy code removed
+
+Legacy code related to older gateway structures have been removed. All gateway
+messages are now based on the [Protobuf](https://github.com/brocaar/loraserver/blob/master/api/gw/gw.proto)
+messages.
+
+#### MQTT topic refactor
+
+Previously, each topic was configured separatly. To be consistent with
+LoRa Gateway Bridge v3, this has been re-factored into "events" and "commands".
+
+### Upgrading
+
+LoRa Server v3 depends on LoRa Gateway Bridge v3! It is recommended to upgrade to
+the latest LoRa Server v2 release (which is forwards compatible with the
+LoRa Gateway Bridge v3), upgrade all LoRa Gateway Bridge installations to v3
+and then upgrade LoRa Server to v3.
+
+It is also recommended to update your LoRa Server configuration file.
+See [Configuration](https://www.loraserver.io/loraserver/install/config/) for
+more information.
+
 ## v2.7.0
 
 ### Improvements
